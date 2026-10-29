@@ -238,12 +238,12 @@ INVESTOR PRESENTATION
 </div>
 <h3 class="font-bold text-white text-sm">1. Покупка Eval ($135)</h3>
 <p class="text-xs text-slate-400 leading-relaxed">
-Покупаем 3 квалификационных аккаунта <b>RAPID EOD $50,000</b> по акционной цене $135 за аккаунт[cite: 1].
+Покупаем 3 квалификационных аккаунта <b>RAPID EOD $50,000</b> по акционной цене $135 за аккаунт[cite: 1, 2].
 </p>
 <ul class="text-[11px] text-slate-300 space-y-1 bg-slate-900/50 p-3 rounded-lg border border-slate-800">
-<li>• <b>Профит-цель:</b> $3,000[cite: 1]</li>
-<li>• <b>Макс. просадка:</b> $2,000 (EOD)[cite: 1]</li>
-<li>• <b>Мин. дней:</b> от 4 дней[cite: 1]</li>
+<li>• <b>Профит-цель:</b> $3,000[cite: 1, 2]</li>
+<li>• <b>Макс. просадка:</b> $2,000 (EOD)[cite: 1, 2]</li>
+<li>• <b>Мин. дней:</b> от 4 дней[cite: 1, 2]</li>
 </ul>
 </div>
 <!-- STEP 2 -->
@@ -257,8 +257,8 @@ INVESTOR PRESENTATION
 При успехе 1 из 3 получаем управление реальным профитом на аккаунте в $50,000.
 </p>
 <ul class="text-[11px] text-slate-300 space-y-1 bg-slate-900/50 p-3 rounded-lg border border-slate-800">
-<li>• <b>Сплит проп-фирмы:</b> 90/10 в нашу пользу[cite: 1]</li>
-<li>• <b>Выплаты:</b> Ежедневные (Daily)[cite: 1]</li>
+<li>• <b>Сплит проп-фирмы:</b> 90/10 в нашу пользу[cite: 1, 2]</li>
+<li>• <b>Выплаты:</b> Ежедневные (Daily)[cite: 1, 2]</li>
 <li>• <b>Активация:</b> $0 (No Activation Fee)[cite: 1]</li>
 </ul>
 </div>
@@ -600,8 +600,8 @@ displays.kpiInitial.innerText = `$${initialCap.toLocaleString()}`;
 displays.kpiActiveFunded.innerText = cumulativeActiveFunded;
 displays.kpiInvestorProfit.innerText = `$${Math.round(totalInvestorReturn).toLocaleString()}`;
 
-const roi = (totalInvestorReturn / initialCap) * 100;
-displays.kpiInvestorROI.innerText = `ROI: ${roi.0}%` || `ROI: ${roi.toFixed(0)}%`;
+const roi = initialCap > 0 ? (totalInvestorReturn / initialCap) * 100 : 0;
+displays.kpiInvestorROI.innerText = `ROI: ${roi.toFixed(0)}%`;
 displays.kpiTraderProfit.innerText = `$${Math.round(totalTraderBonus).toLocaleString()}`;
 renderChart(labels, grossData, investorData, traderData);
 }
