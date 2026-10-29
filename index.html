@@ -174,7 +174,7 @@ box-shadow: 0 0 20px rgba(14, 165, 233, 0.15);
 <div class="glass-card rounded-xl p-4">
 <p class="text-xs text-slate-400 mb-1" data-i18n="kpi4Title">Бонус Трейдера</p>
 <p class="text-xl font-bold text-sky-400" id="kpiTraderProfit">$0</p>
-<span class="text-[10px] text-slate-400" data-i18n="kpiTraderNote">Сверх зарплаты $1,000</span>
+<span class="text-[10px] text-slate-400" id="kpiTraderNote">Сверх зарплаты $1,000</span>
 </div>
 </div>
 <!-- CHART CARD -->
@@ -846,7 +846,9 @@ displays.sumRoadmapText.innerHTML = `<b>${currentHorizon}-Month Journey:</b> Sta
 renderChart(labels, grossData, investorData, traderData, t);
 }
 function renderChart(labels, grossData, investorData, traderData, t) {
-const ctx = document.getElementById('growthChart').getContext('2d');
+const canvasEl = document.getElementById('growthChart');
+if (!canvasEl) return;
+const ctx = canvasEl.getContext('2d');
 if (chartInstance) chartInstance.destroy();
 chartInstance = new Chart(ctx, {
 type: 'bar',
