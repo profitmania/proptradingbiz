@@ -104,22 +104,22 @@ box-shadow: 0 0 20px rgba(14, 165, 233, 0.15);
 <label class="block text-xs font-medium text-slate-300 mb-1" data-i18n="lblPayout">Вывод с 1 Funded аккаунта / мес ($)</label>
 <input type="number" id="targetPayout" value="2000" step="100" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:border-brand-500 focus:outline-none">
 </div>
-<!-- Monthly Salary / OPEX -->
+<!-- Monthly OPEX (Renamed from Trader Salary) -->
 <div>
-<label class="block text-xs font-medium text-slate-300 mb-1" data-i18n="lblOpex">Зарплата трейдера / Расходы ($/мес)</label>
+<label class="block text-xs font-medium text-slate-300 mb-1" data-i18n="lblOpex">Операционные расходы / Содержание бизнеса ($/мес)</label>
 <input type="number" id="monthlyOpex" value="1000" step="100" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:border-brand-500 focus:outline-none">
-<p class="text-[11px] text-slate-400 mt-1" data-i18n="descOpex">Фиксированная зарплата трейдера со 2-го месяца</p>
+<p class="text-[11px] text-slate-400 mt-1" data-i18n="descOpex">Фиксированные расходы на содержание со 2-го месяца</p>
 </div>
 <!-- Reinvestment Rate -->
 <div>
 <div class="flex justify-between text-xs font-medium text-slate-300 mb-1">
-<span data-i18n="lblReinvest">Процент реинвестиций в Eval (с М3+)</span>
+<span data-i18n="lblReinvest">Процент реинвестиций в Eval</span>
 <span id="reinvestRateVal" class="text-purple-400 font-bold">50%</span>
 </div>
 <input type="range" id="reinvestRate" min="10" max="90" value="50" step="5" class="w-full accent-purple-500">
-<p class="text-[11px] text-slate-400 mt-1" data-i18n="descReinvest">% от прибыли после зарплаты, идущий на покупку новых челленджей</p>
+<p class="text-[11px] text-slate-400 mt-1" data-i18n="descReinvest">% от прибыли после OPEX, идущий на покупку новых челленджей</p>
 </div>
-<!-- Investor Share & Start Month Box (Default selected value="2") -->
+<!-- Investor Share & Start Month Box -->
 <div class="p-3 bg-brand-900/20 border border-brand-500/20 rounded-xl space-y-3">
 <div>
 <label class="block text-xs font-medium text-slate-300 mb-1" data-i18n="lblStartMonth">Старт выплат дивидендов (Месяц #)</label>
@@ -140,7 +140,7 @@ box-shadow: 0 0 20px rgba(14, 165, 233, 0.15);
 <input type="range" id="investorShare" min="10" max="90" value="50" step="5" class="w-full accent-emerald-500">
 </div>
 </div>
-<!-- Horizon Toggles (Default 2M active) -->
+<!-- Horizon Toggles -->
 <div>
 <label class="block text-xs font-medium text-slate-300 mb-2" data-i18n="lblHorizon">Горизонт планирования</label>
 <div class="grid grid-cols-5 gap-1.5" id="horizonButtons">
@@ -172,9 +172,9 @@ box-shadow: 0 0 20px rgba(14, 165, 233, 0.15);
 <span class="text-[10px] text-slate-400" id="kpiInvestorROI">ROI: 0%</span>
 </div>
 <div class="glass-card rounded-xl p-4">
-<p class="text-xs text-slate-400 mb-1" data-i18n="kpi4Title">Бонус Трейдера</p>
+<p class="text-xs text-slate-400 mb-1" data-i18n="kpi4Title">Доля Трейдера</p>
 <p class="text-xl font-bold text-sky-400" id="kpiTraderProfit">$0</p>
-<span class="text-[10px] text-slate-400" id="kpiTraderNote">Сверх зарплаты $1,000</span>
+<span class="text-[10px] text-slate-400" id="kpiTraderNote">Бонус с М2+</span>
 </div>
 </div>
 <!-- CHART CARD -->
@@ -215,7 +215,7 @@ box-shadow: 0 0 20px rgba(14, 165, 233, 0.15);
 <p class="text-[11px] text-slate-400" id="sumFundedDesc">С учетом заданного Pass Rate</p>
 </div>
 </div>
-<!-- Increased font size (~1.5x, text-sm leading-relaxed text-slate-200) with linked start month -->
+<!-- Increased font size (~1.5x) with linked start month -->
 <div class="p-4 bg-brand-950/40 rounded-xl border border-brand-500/30 text-sm text-slate-200 leading-relaxed font-normal shadow-inner" id="sumRoadmapText">
 <!-- Dynamic roadmap narrative -->
 </div>
@@ -295,11 +295,11 @@ INVESTOR PRESENTATION
 </div>
 <h3 class="font-bold text-white text-sm" data-i18n="step3Title">3. Разгон и Реинвест</h3>
 <p class="text-xs text-slate-400 leading-relaxed" data-i18n="step3Desc">
-В первые 2 месяца 100% прибыли идет на покупку аккаунтов, а с М3 — 50% реинвест.
+Часть прибыли идет на покрытие OPEX, а остаток реинвестируется в рост пула.
 </p>
 <ul class="text-[11px] text-slate-300 space-y-1 bg-slate-900/50 p-3 rounded-lg border border-slate-800">
 <li>• <span data-i18n="s3Li1">Диверсификация:</span> <span data-i18n="s3Li1Val">Сетка аккаунтов</span></li>
-<li>• <span data-i18n="s3Li2">Зарплата трейдера:</span> <span data-i18n="s3Li2Val">$1,000/мес</span></li>
+<li>• <span data-i18n="s3Li2">Расходы OPEX:</span> <span data-i18n="s3Li2Val">$1,000/мес</span></li>
 <li>• <span data-i18n="s3Li3">Органический рост:</span> <span data-i18n="s3Li3Val">За счет выплат</span></li>
 </ul>
 </div>
@@ -311,11 +311,11 @@ INVESTOR PRESENTATION
 </div>
 <h3 class="font-bold text-white text-sm" data-i18n="step4Title">4. Выплаты Инвестору</h3>
 <p class="text-xs text-slate-400 leading-relaxed" data-i18n="step4Desc">
-С 3-го месяца чистая прибыль делится 50/50 между инвестором и трейдером.
+С выбранного месяца чистая прибыль распределяется между инвестором и управляющим.
 </p>
 <ul class="text-[11px] text-slate-300 space-y-1 bg-slate-900/50 p-3 rounded-lg border border-slate-800">
-<li>• <span data-i18n="s4Li1">Сплит дивидендов:</span> <span data-i18n="s4Li1Val">50% / 50% (с М3)</span></li>
-<li>• <span data-i18n="s4Li2">Зарплата:</span> <span data-i18n="s4Li2Val">$1,000 гарантировано</span></li>
+<li>• <span data-i18n="s4Li1">Сплит дивидендов:</span> <span data-i18n="s4Li1Val">Настройка сплита</span></li>
+<li>• <span data-i18n="s4Li2">Покрытие OPEX:</span> <span data-i18n="s4Li2Val">$1,000 фиксировано</span></li>
 <li>• <span data-i18n="s4Li3">Потенциал:</span> <span data-i18n="s4Li3Val">Выход на стабильный профит</span></li>
 </ul>
 </div>
@@ -353,111 +353,6 @@ $135 <span class="text-xs text-slate-400 line-through font-normal">$225</span>
 </div>
 </div>
 </div>
-<!-- SECTION 3: INITIAL INVESTMENT & COMPOUNDING TIMELINE -->
-<div class="mt-12 space-y-6">
-<div class="text-center max-w-2xl mx-auto space-y-2">
-<span class="px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-semibold border border-purple-500/30" data-i18n="timelineBadge">
-INVESTMENT TIMELINE & CAPITAL COMPOUNDING
-</span>
-<h2 class="text-2xl font-bold text-white" data-i18n="timelineTitle">Стратегия Разгона и Выплат Дивидендов</h2>
-<p class="text-xs text-slate-400" data-i18n="timelineSub">Пошаговое развитие бизнеса с выходом на распределение прибыли 50/50.</p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-<!-- MONTH 1 CARD -->
-<div class="glass-card rounded-2xl p-6 border-l-4 border-l-brand-400 space-y-4">
-<div class="flex justify-between items-center border-b border-slate-800 pb-3">
-<span class="text-xs font-bold text-brand-400 uppercase tracking-wider" data-i18n="m1Header">Месяц 1</span>
-<span class="px-2.5 py-1 bg-brand-500/10 text-brand-300 text-[11px] font-semibold rounded-lg border border-brand-500/20" data-i18n="m1Badge">
-Запуск ($1,000)
-</span>
-</div>
-<h3 class="font-bold text-white text-sm" data-i18n="m1Title">Формирование Первого Funded-Аккаунта</h3>
-<div class="space-y-2 text-xs text-slate-300">
-<div class="flex justify-between p-2 bg-slate-900/60 rounded-lg">
-<span class="text-slate-400" data-i18n="cInitial">Стартовый капитал:</span>
-<span class="font-bold text-white">$1,000</span>
-</div>
-<div class="flex justify-between p-2 bg-slate-900/60 rounded-lg">
-<span class="text-slate-400" data-i18n="cEvalBought">Куплено Eval ($135/шт):</span>
-<span class="font-bold text-purple-300">3 шт (-$405)</span>
-</div>
-<div class="flex justify-between p-2 bg-slate-900/60 rounded-lg">
-<span class="text-slate-400" data-i18n="cOpex1">Расходы М1:</span>
-<span class="font-bold text-rose-300">-$595</span>
-</div>
-<div class="flex justify-between p-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-emerald-400">
-<span data-i18n="cFunded1">Стало Funded (1 из 3):</span>
-<span class="font-bold" data-i18n="cFunded1Val">1 Funded ($50K)</span>
-</div>
-</div>
-<p class="text-[11px] text-slate-400 leading-relaxed" data-i18n="m1Desc">
-Покупаем 3 челленджа. С учетом 33.3% Win Rate 1 аккаунт успешно проходит и становится <b>Funded ($50,000)</b> для первой выплаты в $2,000.
-</p>
-</div>
-<!-- MONTH 2 CARD -->
-<div class="glass-card rounded-2xl p-6 border-l-4 border-l-purple-400 space-y-4">
-<div class="flex justify-between items-center border-b border-slate-800 pb-3">
-<span class="text-xs font-bold text-purple-400 uppercase tracking-wider" data-i18n="m2Header">Месяц 2</span>
-<span class="px-2.5 py-1 bg-purple-500/10 text-purple-300 text-[11px] font-semibold rounded-lg border border-purple-500/20" data-i18n="m2Badge">
-Масштабирование
-</span>
-</div>
-<h3 class="font-bold text-white text-sm" data-i18n="m2Title">Масштабирование Сетки Аккаунтов</h3>
-<div class="space-y-2 text-xs text-slate-300">
-<div class="flex justify-between p-2 bg-slate-900/60 rounded-lg">
-<span class="text-slate-400" data-i18n="cPayout2">Выплата с 1-го Funded:</span>
-<span class="font-bold text-sky-300">+$2,000</span>
-</div>
-<div class="flex justify-between p-2 bg-slate-900/60 rounded-lg">
-<span class="text-slate-400" data-i18n="cSalary2">Зарплата трейдера:</span>
-<span class="font-bold text-rose-300">-$1,000</span>
-</div>
-<div class="flex justify-between p-2 bg-purple-500/10 border border-purple-500/20 rounded-lg text-purple-300">
-<span data-i18n="cEval2">Куплено Eval ($1,000):</span>
-<span class="font-bold" data-i18n="cEval2Val">7 шт</span>
-</div>
-<div class="flex justify-between p-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-emerald-400">
-<span data-i18n="cFunded2">Стало Funded (+2 шт):</span>
-<span class="font-bold" data-i18n="cFunded2Val">Всего 3 Funded</span>
-</div>
-</div>
-<p class="text-[11px] text-slate-400 leading-relaxed" data-i18n="m2Desc">
-Первые $1,000 идут на зарплату трейдера, а оставшаяся прибыль направляется на покупку новых челленджей и выплату дивидендов согласно выбранному сплиту.
-</p>
-</div>
-<!-- MONTH 3 CARD -->
-<div class="glass-card rounded-2xl p-6 border-l-4 border-l-emerald-400 space-y-4">
-<div class="flex justify-between items-center border-b border-slate-800 pb-3">
-<span class="text-xs font-bold text-emerald-400 uppercase tracking-wider" data-i18n="m3Header">Месяц 3</span>
-<span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 text-[11px] font-semibold rounded-lg border border-emerald-500/20" data-i18n="m3Badge">
-Старт Выплат
-</span>
-</div>
-<h3 class="font-bold text-white text-sm" data-i18n="m3Title">Вывод Дивидендов</h3>
-<div class="space-y-2 text-xs text-slate-300">
-<div class="flex justify-between p-2 bg-slate-900/60 rounded-lg">
-<span class="text-slate-400" data-i18n="cPayout3">Вывод с Funded:</span>
-<span class="font-bold text-sky-300">+$6,000</span>
-</div>
-<div class="flex justify-between p-2 bg-slate-900/60 rounded-lg">
-<span class="text-slate-400" data-i18n="cSalary3">Зарплата трейдера:</span>
-<span class="font-bold text-rose-300">-$1,000</span>
-</div>
-<div class="flex justify-between p-2 bg-purple-500/10 border border-purple-500/20 rounded-lg text-purple-300">
-<span data-i18n="cReinvest3">Реинвест в Eval:</span>
-<span class="font-bold" data-i18n="cReinvest3Val">В портфель</span>
-</div>
-<div class="flex justify-between p-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-emerald-400">
-<span data-i18n="cDiv3">Дивиденды:</span>
-<span class="font-bold" data-i18n="cDiv3Val">Распределение</span>
-</div>
-</div>
-<p class="text-[11px] text-slate-400 leading-relaxed" data-i18n="m3Desc">
-Масштабирование сетки аккаунтов и стабильное ежемесячное распределение чистой прибыли между инвестором и трейдером.
-</p>
-</div>
-</div>
-</div>
 </main>
 <script>
 let currentLang = 'ru';
@@ -473,10 +368,10 @@ lblEvalPrice: "Цена Eval Аккаунта ($)",
 lblWinRate: "Успешность (Pass Rate)",
 descWinRate: "Заложена потеря 66.7% аккаунтов на челленджах",
 lblPayout: "Вывод с 1 Funded аккаунта / мес ($)",
-lblOpex: "Зарплата трейдера / Расходы ($/мес)",
-descOpex: "Фиксированная зарплата трейдера со 2-го месяца",
+lblOpex: "Операционные расходы / Содержание бизнеса ($/мес)",
+descOpex: "Фиксированные расходы на содержание со 2-го месяца",
 lblReinvest: "Процент реинвестиций в Eval",
-descReinvest: "% от прибыли после зарплаты, идущий на покупку новых челленджей",
+descReinvest: "% от прибыли после OPEX, идущий на покупку новых челленджей",
 lblStartMonth: "Старт выплат дивидендов (Месяц #)",
 optM1: "С 1-го месяца",
 optM2: "Со 2-го месяца",
@@ -491,9 +386,9 @@ kpi1Sub: "Стартовый капитал",
 kpi2Title: "Активные Funded",
 kpi2Sub: "На конец периода",
 kpi3Title: "Дивиденды Инвестора",
-kpi4Title: "Бонус Трейдера",
+kpi4Title: "Доля Управляющего",
 chartTitle: "Динамика Выплат и Распределения Прибыли",
-chartSub: "Заработок / Инвестор / Трейдер",
+chartSub: "Заработок / Инвестор / Управляющий",
 summaryBlockTitle: "Итоги периода и дорожная карта разгона",
 sumGrossLabel: "Валовый заработок за период:",
 sumGrossDesc: "Сгенерировано сеткой funded-аккаунтов",
@@ -505,34 +400,7 @@ tableTitle: "Прозрачный Помесячный План Движения
 pitchBadge: "INVESTOR PRESENTATION",
 pitchTitle: "Как работает Prop Trading бизнес?",
 pitchSub: "Пошаговая бизнес-модель: от покупки аккаунта до генерации стабильной дивидендной прибыли.",
-step1Title: "1. Покупка Eval ($135)",
-step1Desc: "Покупаем 3 квалификационных аккаунта <b>RAPID EOD $50,000</b> по акционной цене $135 за аккаунт.",
-s1Li1: "Профит-цель:", s1Li2: "Макс. просадка:", s1Li3: "Мин. дней:", s1Li3Val: "от 4 дней",
-step2Title: "2. Funded Статус ($50K)",
-step2Desc: "При успехе 1 из 3 получаем управление реальным профитом на аккаунте в $50,000.",
-s2Li1: "Сплит проп-фирмы:", s2Li1Val: "90/10 в нашу пользу", s2Li2: "Выплаты:", s2Li2Val: "Ежедневные (Daily)", s2Li3: "Активация:",
-step3Title: "3. Разгон и Реинвест",
-step3Desc: "В первые месяцы часть прибыли идет на покупку аккаунтов, а далее запускается реинвест.",
-s3Li1: "Диверсификация:", s3Li1Val: "Сетка аккаунтов", s3Li2: "Зарплата трейдера:", s3Li2Val: "$1,000/мес", s3Li3: "Органический рост:", s3Li3Val: "За счет выплат",
-step4Title: "4. Выплаты Инвестору",
-step4Desc: "С выбранного месяца чистая прибыль делится между инвестором и трейдером.",
-s4Li1: "Сплит дивидендов:", s4Li1Val: "Настройка сплита", s4Li2: "Зарплата:", s4Li2Val: "$1,000 гарантировано", s4Li3: "Потенциал:", s4Li3Val: "Выход на стабильный профит",
-specTitle: "Спецификация тарифа RAPID EOD ($50,000)",
-specSub: "Базовый инструмент для реализации торговой стратегии",
-specTarget: "Target Profit", specDd: "Max Drawdown", specSplit: "Profit Split", specMinDays: "Min Days to Pass", specDays: "4 Дня",
-timelineBadge: "INVESTMENT TIMELINE & CAPITAL COMPOUNDING",
-timelineTitle: "Стратегия Разгона и Выплат Дивидендов",
-timelineSub: "Пошаговое развитие бизнеса с выходом на распределение прибыли.",
-m1Header: "Месяц 1", m1Badge: "Запуск ($1,000)", m1Title: "Формирование Первого Funded-Аккаунта",
-cInitial: "Стартовый капитал:", cEvalBought: "Куплено Eval ($135/шт):", cOpex1: "Расходы М1:", cFunded1: "Стало Funded (1 из 3):", cFunded1Val: "1 Funded ($50K)",
-m1Desc: "Покупаем 3 челленджа. С учетом 33.3% Win Rate 1 аккаунт успешно проходит и становится <b>Funded ($50,000)</b> для первой выплаты в $2,000.",
-m2Header: "Месяц 2", m2Badge: "Масштабирование", m2Title: "Масштабирование Сетки Аккаунтов",
-cPayout2: "Выплата с 1-го Funded:", cSalary2: "Зарплата трейдера:", cEval2: "Куплено Eval:", cEval2Val: "Аккаунты", cFunded2: "Стало Funded:", cFunded2Val: "Пул Funded",
-m2Desc: "Зарплата покрывается из выплат, запускается активное наращивание пула Funded-аккаунтов.",
-m3Header: "Месяц 3", m3Badge: "Старт Выплат", m3Title: "Вывод Дивидендов",
-cPayout3: "Вывод с Funded:", cSalary3: "Зарплата трейдера:", cReinvest3: "Реинвест в Eval:", cReinvest3Val: "Портфель", cDiv3: "Дивиденды:", cDiv3Val: "Распределение",
-m3Desc: "Масштабирование сетки аккаунтов и регулярное распределение дивидендов.",
-thMonth: "Месяц", thGross: "Валовый Заработок ($)", thOpex: "Зарплата Трейдера ($)", thEvalSpend: "Реинвест в Eval ($)", thEvalCount: "Куплено Eval (шт)", thPassedCount: "Стало Funded (+шт)", thTotalFunded: "Всего Funded (шт)", thNetDiv: "Чистые Дивиденды ($)", thInvestor: "Инвестор", thTrader: "Трейдер", thTotal: "ИТОГО", chartGross: "Валовый Заработок ($)", chartInvestor: "Выплата Инвестору ($)", chartTrader: "Бонус Трейдера ($)"
+thMonth: "Месяц", thGross: "Валовый Заработок ($)", thOpex: "OPEX / Расходы ($)", thEvalSpend: "Реинвест в Eval ($)", thEvalCount: "Куплено Eval (шт)", thPassedCount: "Стало Funded (+шт)", thTotalFunded: "Всего Funded (шт)", thNetDiv: "Чистые Дивиденды ($)", thInvestor: "Инвестор", thTrader: "Управляющий", thTotal: "ИТОГО", chartGross: "Валовый Заработок ($)", chartInvestor: "Выплата Инвестору ($)", chartTrader: "Доля Управляющего ($)"
 },
 en: {
 subTitle: "Financial Growth Engine & Investor Pitch",
@@ -545,10 +413,10 @@ lblEvalPrice: "Eval Account Price ($)",
 lblWinRate: "Pass Rate",
 descWinRate: "Assuming 66.7% challenge failure rate",
 lblPayout: "Payout per Funded Account / mo ($)",
-lblOpex: "Trader Salary / OPEX ($/mo)",
-descOpex: "Fixed trader salary from Month 2",
+lblOpex: "Operational Expenses / Business OPEX ($/mo)",
+descOpex: "Fixed business maintenance from Month 2",
 lblReinvest: "Eval Reinvestment Rate",
-descReinvest: "% of profit after salary going to new challenges",
+descReinvest: "% of profit after OPEX going to new challenges",
 lblStartMonth: "Dividend Start (Month #)",
 optM1: "From Month 1",
 optM2: "From Month 2",
@@ -563,9 +431,9 @@ kpi1Sub: "Starting Capital",
 kpi2Title: "Active Funded",
 kpi2Sub: "End of Period",
 kpi3Title: "Investor Dividends",
-kpi4Title: "Trader Bonus",
+kpi4Title: "Manager Share",
 chartTitle: "Payout Dynamics & Profit Distribution",
-chartSub: "Earnings / Investor / Trader",
+chartSub: "Earnings / Investor / Manager",
 summaryBlockTitle: "Period Summary & Scaling Roadmap",
 sumGrossLabel: "Gross Earnings for Period:",
 sumGrossDesc: "Generated by funded account grid",
@@ -577,34 +445,7 @@ tableTitle: "Transparent Monthly Cash Flow Plan",
 pitchBadge: "INVESTOR PRESENTATION",
 pitchTitle: "How Prop Trading Business Works",
 pitchSub: "Step-by-step business model: from account purchase to stable dividend generation.",
-step1Title: "1. Buy Eval ($135)",
-step1Desc: "We purchase 3 promotional <b>RAPID EOD $50,000</b> qualification accounts at $135 each.",
-s1Li1: "Profit Target:", s1Li2: "Max Drawdown:", s1Li3: "Min Days:", s1Li3Val: "from 4 days",
-step2Title: "2. Funded Status ($50K)",
-step2Desc: "With a 1-in-3 pass rate, we manage real profit on a $50,000 account.",
-s2Li1: "Prop Firm Split:", s2Li1Val: "90/10 in our favor", s2Li2: "Payouts:", s2Li2Val: "Daily", s2Li3: "Activation Fee:",
-step3Title: "3. Scaling & Reinvestment",
-step3Desc: "In early months profits go to accounts, followed by reinvestment.",
-s3Li1: "Diversification:", s3Li1Val: "Account grid", s3Li2: "Trader Salary:", s3Li2Val: "$1,000/mo", s3Li3: "Organic Growth:", s3Li3Val: "From payouts",
-step4Title: "4. Investor Payouts",
-step4Desc: "From selected month, net profit is split between investor and trader.",
-s4Li1: "Dividend Split:", s4Li1Val: "Split setup", s4Li2: "Salary:", s4Li2Val: "$1,000 guaranteed", s4Li3: "Potential:", s4Li3Val: "Stable profit generation",
-specTitle: "RAPID EOD ($50,000) Specification",
-specSub: "Core instrument for executing trading strategy",
-specTarget: "Target Profit", specDd: "Max Drawdown", specSplit: "Profit Split", specMinDays: "Min Days to Pass", specDays: "4 Days",
-timelineBadge: "INVESTMENT TIMELINE & CAPITAL COMPOUNDING",
-timelineTitle: "Scaling & Dividend Payout Strategy",
-timelineSub: "Step-by-step business growth reaching profit distribution.",
-m1Header: "Month 1", m1Badge: "Launch ($1,000)", m1Title: "First Funded Account Setup",
-cInitial: "Starting Capital:", cEvalBought: "Eval Bought ($135/ea):", cOpex1: "M1 Expenses:", cFunded1: "Funded (1 of 3):", cFunded1Val: "1 Funded ($50K)",
-m1Desc: "We buy 3 challenges. At 33.3% Win Rate, 1 account passes and becomes <b>Funded ($50,000)</b> for the first $2,000 payout.",
-m2Header: "Month 2", m2Badge: "Scaling", m2Title: "Account Grid Scaling",
-cPayout2: "1st Funded Payout:", cSalary2: "Trader Salary:", cEval2: "Eval Bought:", cEval2Val: "Accounts", cFunded2: "Funded Added:", cFunded2Val: "Funded pool",
-m2Desc: "Salary is covered from payouts, active pool expansion begins.",
-m3Header: "Month 3", m3Badge: "Payout Start", m3Title: "Dividend Withdrawal",
-cPayout3: "Funded Payouts:", cSalary3: "Trader Salary:", cReinvest3: "Eval Reinvest:", cReinvest3Val: "Portfolio", cDiv3: "Dividends:", cDiv3Val: "Distribution",
-m3Desc: "Account grid scaling and regular dividend distribution.",
-thMonth: "Month", thGross: "Gross Earnings ($)", thOpex: "Trader Salary ($)", thEvalSpend: "Eval Reinvest ($)", thEvalCount: "Eval Bought", thPassedCount: "Funded Added", thTotalFunded: "Total Funded", thNetDiv: "Net Dividends ($)", thInvestor: "Investor", thTrader: "Trader", thTotal: "TOTAL", chartGross: "Gross Earnings ($)", chartInvestor: "Investor Payout ($)", chartTrader: "Trader Bonus ($)"
+thMonth: "Month", thGross: "Gross Earnings ($)", thOpex: "OPEX / Expenses ($)", thEvalSpend: "Eval Reinvest ($)", thEvalCount: "Eval Bought", thPassedCount: "Funded Added", thTotalFunded: "Total Funded", thNetDiv: "Net Dividends ($)", thInvestor: "Investor", thTrader: "Manager", thTotal: "TOTAL", chartGross: "Gross Earnings ($)", chartInvestor: "Investor Payout ($)", chartTrader: "Manager Bonus ($)"
 }
 };
 
@@ -630,7 +471,6 @@ el.innerHTML = translations[lang][key];
 calculateAndRender();
 }
 
-// Default horizon set to 2 months
 let currentHorizon = 2;
 let chartInstance = null;
 const inputs = {
@@ -695,17 +535,15 @@ displays.winRateVal.innerText = `${winRatePct.toFixed(1)}% (1${fractionLabel}${(
 displays.reinvestRateVal.innerText = `${reinvestPct}%`;
 displays.investorShareVal.innerText = `${invSharePct}%`;
 displays.headerBadge.innerHTML = `<i class="fa-solid fa-handshake mr-1"></i> Investor Split: ${invSharePct}% (с М${startMonth}+)`;
-const bonusText = currentLang === 'ru' ? `Бонус ${100-invSharePct}% с М${startMonth}+` : `Bonus ${100-invSharePct}% from M${startMonth}+`;
+const bonusText = currentLang === 'ru' ? `Доля ${100-invSharePct}% с М${startMonth}+` : `Share ${100-invSharePct}% from M${startMonth}+`;
 displays.kpiTraderNote.innerText = bonusText;
 
-// Update table subheader dynamically
 if(currentLang === 'ru') {
-displays.tableSubHeader.innerText = `С М${startMonth}: (Заработок - $1,000) -> ${reinvestPct}% Реинвест + ${100-reinvestPct}% Дивиденды (${invSharePct}/${100-invSharePct})`;
+displays.tableSubHeader.innerText = `С М${startMonth}: (Заработок - OPEX) -> ${reinvestPct}% Реинвест + ${100-reinvestPct}% Дивиденды (${invSharePct}/${100-invSharePct})`;
 } else {
-displays.tableSubHeader.innerText = `From M${startMonth}: (Earnings - $1,000) -> ${reinvestPct}% Reinvest + ${100-reinvestPct}% Dividends (${invSharePct}/${100-invSharePct})`;
+displays.tableSubHeader.innerText = `From M${startMonth}: (Earnings - OPEX) -> ${reinvestPct}% Reinvest + ${100-reinvestPct}% Dividends (${invSharePct}/${100-invSharePct})`;
 }
 
-// Render Table Header dynamically based on language
 displays.tableHeaderRow.innerHTML = `
 <tr>
 <th class="p-3">${t.thMonth}</th>
@@ -735,7 +573,7 @@ const labels = [];
 const grossData = [];
 const investorData = [];
 const traderData = [];
-let reinvestBudgetForMonth = 405; // M1: 3 * $135 = $405
+let reinvestBudgetForMonth = 405;
 for (let m = 1; m <= currentHorizon; m++) {
 const monthLabel = currentLang === 'ru' ? `Месяц ${m}` : `Month ${m}`;
 labels.push(monthLabel);
@@ -815,7 +653,6 @@ const roi = initialCap > 0 ? (totalInvestorReturn / initialCap) * 100 : 0;
 displays.kpiInvestorROI.innerText = `ROI: ${roi.toFixed(0)}%`;
 displays.kpiTraderProfit.innerText = `$${Math.round(totalTraderBonus).toLocaleString()}`;
 
-// Update dynamic summary card
 displays.summaryHorizonBadge.innerText = currentLang === 'ru' ? `Горизонт: ${currentHorizon} месяца(-ов)` : `Horizon: ${currentHorizon} Months`;
 displays.sumGrossVal.innerText = `$${Math.round(totGross).toLocaleString()}`;
 displays.sumEvalVal.innerText = `${totEvalsBought}${pcsTextTotal} ($${Math.round(totEvalSpend).toLocaleString()})`;
