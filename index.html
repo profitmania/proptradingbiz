@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROP TRADING BUSINESS | Pro Financial Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+tailwind.config = {
+darkMode: 'class',
+theme: {
+extend: {
+colors: {
+brand: {
+50: '#f0f9ff',
+100: '#e0f2fe',
+400: '#38bdf8',
+500: '#0ea5e9',
+600: '#0284c7',
+900: '#0c4a6e',
+},
+card: '#1e293b',
+darkbg: '#0f172a'
+}
+}
+}
+}
+</script>
+<style>
+.glass-card {
+background: rgba(30, 41, 59, 0.7);
+backdrop-filter: blur(12px);
+border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.glow-cyan {
+box-shadow: 0 0 20px rgba(14, 165, 233, 0.15);
+}
+</style>
+</head>
+<body class="bg-darkbg text-slate-100 font-sans antialiased min-h-screen pb-12">
+<!-- TOP NAV -->
+<header class="border-b border-slate-800 bg-slate-900/80 sticky top-0 z-50 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center space-x-3">
+<div class="p-2 bg-brand-500/10 rounded-lg border border-brand-500/30">
+<i class="fa-solid fa-chart-line text-brand-400 text-xl"></i>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tight text-white">PROP TRADING BUSINESS</h1>
+<p class="text-xs text-slate-400">Financial Growth Engine & Investor Pitch</p>
+</div>
+</div>
+<div class="flex items-center space-x-3 text-xs">
+<span class="px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
+<i class="fa-solid fa-shield-halved mr-1"></i> Strategy: RAPID EOD $50K
+</span>
+<span class="px-3 py-1.5 rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20 font-medium" id="headerInvestorBadge">
+<i class="fa-solid fa-handshake mr-1"></i> Investor Split: 50% (с М3)
+</span>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 mt-6 space-y-8">
+<!-- SECTION 1: CALCULATOR & INPUT CONTROLS -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+<!-- CONTROLS PANEL -->
+<div class="glass-card rounded-2xl p-6 space-y-5 lg:col-span-1">
+<div class="flex items-center justify-between pb-3 border-b border-slate-700/60">
+<h2 class="text-lg font-semibold text-slate-100 flex items-center gap-2">
+<i class="fa-solid fa-sliders text-brand-400"></i> Параметры модели
+</h2>
+<span class="text-xs text-slate-400">Интерактивный расчет</span>
+</div>
+<!-- Initial Outlay -->
+<div>
+<label class="block text-xs font-medium text-slate-300 mb-1">Стартовые инвестиции ($)</label>
+<input type="number" id="initialCapital" value="1000" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:border-brand-500 focus:outline-none">
+<p class="text-[11px] text-slate-400 mt-1">$405 на 3 челленджа + $595 на расходы М1</p>
+</div>
+<!-- Eval Price -->
+<div>
+<label class="block text-xs font-medium text-slate-300 mb-1">Цена Eval Аккаунта ($)</label>
+<input type="number" id="evalPrice" value="135" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:border-brand-500 focus:outline-none">
+</div>
+<!-- Win Rate -->
+<div>
+<div class="flex justify-between text-xs font-medium text-slate-300 mb-1">
+<span>Успешность (Pass Rate)</span>
+<span id="winRateVal" class="text-brand-400 font-bold">33.3% (1 из 3)</span>
+</div>
+<input type="range" id="winRate" min="10" max="100" value="33.3" step="0.1" class="w-full accent-brand-500">
+<p class="text-[11px] text-slate-400 mt-1">Заложена потеря 66.7% аккаунтов на челленджах</p>
+</div>
+<!-- Monthly Payout per Funded -->
+<div>
+<label class="block text-xs font-medium text-slate-300 mb-1">Вывод с 1 Funded аккаунта / мес ($)</label>
+<input type="number" id="targetPayout" value="2000" step="100" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:border-brand-500 focus:outline-none">
+</div>
+<!-- Monthly Salary / OPEX -->
+<div>
+<label class="block text-xs font-medium text-slate-300 mb-1">Зарплата трейдера / Расходы ($/мес)</label>
+<input type="number" id="monthlyOpex" value="1000" step="100" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:border-brand-500 focus:outline-none">
+<p class="text-[11px] text-slate-400 mt-1">Фиксированная зарплата трейдера со 2-го месяца</p>
+</div>
+<!-- Reinvestment Rate -->
+<div>
+<div class="flex justify-between text-xs font-medium text-slate-300 mb-1">
+<span>Процент реинвестиций в Eval (с М3+)</span>
+<span id="reinvestRateVal" class="text-purple-400 font-bold">50%</span>
+</div>
+<input type="range" id="reinvestRate" min="10" max="90" value="50" step="5" class="w-full accent-purple-500">
+<p class="text-[11px] text-slate-400 mt-1">% от прибыли после зарплаты, идущий на покупку новых челленджей</p>
+</div>
+<!-- Investor Share & Start Month Box -->
+<div class="p-3 bg-brand-900/20 border border-brand-500/20 rounded-xl space-y-3">
+<div>
+<label class="block text-xs font-medium text-slate-300 mb-1">Старт выплат дивидендов (Месяц #)</label>
+<select id="investorStartMonth" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:border-brand-500 focus:outline-none">
+<option value="1">С 1-го месяца</option>
+<option value="2">Со 2-го месяца</option>
+<option value="3" selected>С 3-го месяца (Grace Period 2 мес)</option>
+<option value="4">С 4-го месяца</option>
+<option value="5">С 5-го месяца</option>
+<option value="6">С 6-го месяца</option>
+</select>
+</div>
+<div>
+<div class="flex justify-between text-xs font-medium text-slate-300 mb-1">
+<span>Доля инвестора от дивидендов</span>
+<span id="investorShareVal" class="text-emerald-400 font-bold">50%</span>
+</div>
+<input type="range" id="investorShare" min="10" max="90" value="50" step="5" class="w-full accent-emerald-500">
+</div>
+</div>
+<!-- Horizon Toggles -->
+<div>
+<label class="block text-xs font-medium text-slate-300 mb-2">Горизонт планирования</label>
+<div class="grid grid-cols-5 gap-1.5" id="horizonButtons">
+<button data-months="3" class="horizon-btn py-2 text-[11px] rounded-lg border border-slate-700 bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 transition-colors">3M</button>
+<button data-months="4" class="horizon-btn py-2 text-[11px] rounded-lg border border-brand-500 bg-brand-500/20 text-brand-300 font-medium active transition-colors">4M</button>
+<button data-months="5" class="horizon-btn py-2 text-[11px] rounded-lg border border-slate-700 bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 transition-colors">5M</button>
+<button data-months="6" class="horizon-btn py-2 text-[11px] rounded-lg border border-slate-700 bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 transition-colors">6M</button>
+<button data-months="12" class="horizon-btn py-2 text-[11px] rounded-lg border border-slate-700 bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 transition-colors">12M</button>
+</div>
+</div>
+</div>
+<!-- KPI SUMMARY & GRAPH -->
+<div class="space-y-6 lg:col-span-2">
+<!-- KPI CARDS -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="glass-card rounded-xl p-4">
+<p class="text-xs text-slate-400 mb-1">Инвестиции</p>
+<p class="text-xl font-bold text-white" id="kpiInitial">$1,000</p>
+<span class="text-[10px] text-slate-400">Стартовый капитал</span>
+</div>
+<div class="glass-card rounded-xl p-4">
+<p class="text-xs text-slate-400 mb-1">Активные Funded</p>
+<p class="text-xl font-bold text-brand-400" id="kpiActiveFunded">0</p>
+<span class="text-[10px] text-slate-400">На конец периода</span>
+</div>
+<div class="glass-card rounded-xl p-4">
+<p class="text-xs text-slate-400 mb-1">Дивиденды Инвестора</p>
+<p class="text-xl font-bold text-emerald-400" id="kpiInvestorProfit">$0</p>
+<span class="text-[10px] text-slate-400" id="kpiInvestorROI">ROI: 0%</span>
+</div>
+<div class="glass-card rounded-xl p-4">
+<p class="text-xs text-slate-400 mb-1">Бонус Трейдера</p>
+<p class="text-xl font-bold text-sky-400" id="kpiTraderProfit">$0</p>
+<span class="text-[10px] text-slate-400" id="kpiTraderNote">Сверх зарплаты $1,000</span>
+</div>
+</div>
+<!-- CHART CARD -->
+<div class="glass-card rounded-2xl p-6 glow-cyan">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-sm font-semibold text-white flex items-center gap-2">
+<i class="fa-solid fa-chart-area text-brand-400"></i> Динамика Выплат и Распределения Прибыли
+</h3>
+<span class="text-xs text-slate-400">Заработок / Инвестор / Трейдер</span>
+</div>
+<div class="h-64">
+<canvas id="growthChart"></canvas>
+</div>
+</div>
+</div>
+</div>
+<!-- DETAILED TABLE -->
+<div class="glass-card rounded-2xl p-6 overflow-hidden">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
+<h3 class="text-sm font-semibold text-white flex items-center gap-2">
+<i class="fa-solid fa-table text-brand-400"></i> Прозрачный Помесячный План Движения Денег
+</h3>
+<span class="text-xs text-slate-400">С М3: (Заработок - $1,000) -> 50% Реинвест + 50% Дивиденды (50/50)</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs text-slate-300 border-collapse">
+<thead class="bg-slate-900/90 uppercase text-slate-400 text-[10px] border-b border-slate-700">
+<tr>
+<th class="p-3">Месяц</th>
+<th class="p-3 text-sky-300">Валовый Заработок ($)</th>
+<th class="p-3 text-rose-300">Зарплата Трейдера ($)</th>
+<th class="p-3 text-purple-300">Реинвест в Eval ($)</th>
+<th class="p-3 text-purple-300">Куплено Eval (шт)</th>
+<th class="p-3 text-emerald-400">Стало Funded (+шт)</th>
+<th class="p-3 font-bold text-brand-400">Всего Funded (шт)</th>
+<th class="p-3 text-white font-semibold">Чистые Дивиденды ($)</th>
+<th class="p-3 text-emerald-400 font-bold">Инвестор (50%)</th>
+<th class="p-3 text-sky-400 font-bold">Трейдер (50%)</th>
+</tr>
+</thead>
+<tbody id="financialTableBody" class="divide-y divide-slate-800">
+<!-- Dynamic content -->
+</tbody>
+<tfoot id="financialTableFoot" class="bg-slate-900/95 font-bold border-t border-slate-700 text-white">
+<!-- Footer totals -->
+</tfoot>
+</table>
+</div>
+</div>
+<!-- SECTION 2: INVESTOR PITCH PRESENTATION ROADMAP -->
+<div class="mt-12 space-y-6">
+<div class="text-center max-w-2xl mx-auto space-y-2">
+<span class="px-3 py-1 rounded-full bg-brand-500/10 text-brand-400 text-xs font-semibold border border-brand-500/30">
+INVESTOR PRESENTATION
+</span>
+<h2 class="text-2xl font-bold text-white">Как работает Prop Trading бизнес?</h2>
+<p class="text-xs text-slate-400">Пошаговая бизнес-модель: от покупки аккаунта до генерации стабильной дивидендной прибыли.</p>
+</div>
+<!-- 4-STEP ROADMAP GRID -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- STEP 1 -->
+<div class="glass-card rounded-2xl p-5 border-t-4 border-t-blue-500 space-y-3 relative">
+<span class="absolute top-3 right-4 text-2xl font-black text-slate-700/40">01</span>
+<div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400">
+<i class="fa-solid fa-cart-shopping"></i>
+</div>
+<h3 class="font-bold text-white text-sm">1. Покупка Eval ($135)</h3>
+<p class="text-xs text-slate-400 leading-relaxed">
+Покупаем 3 квалификационных аккаунта <b>RAPID EOD $50,000</b> по акционной цене $135 за аккаунт[cite: 1].
+</p>
+<ul class="text-[11px] text-slate-300 space-y-1 bg-slate-900/50 p-3 rounded-lg border border-slate-800">
+<li>• <b>Профит-цель:</b> $3,000[cite: 1]</li>
+<li>• <b>Макс. просадка:</b> $2,000 (EOD)[cite: 1]</li>
+<li>• <b>Мин. дней:</b> от 4 дней[cite: 1]</li>
+</ul>
+</div>
+<!-- STEP 2 -->
+<div class="glass-card rounded-2xl p-5 border-t-4 border-t-emerald-500 space-y-3 relative">
+<span class="absolute top-3 right-4 text-2xl font-black text-slate-700/40">02</span>
+<div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+<i class="fa-solid fa-certificate"></i>
+</div>
+<h3 class="font-bold text-white text-sm">2. Funded Статус ($50K)</h3>
+<p class="text-xs text-slate-400 leading-relaxed">
+При успехе 1 из 3 получаем управление реальным профитом на аккаунте в $50,000.
+</p>
+<ul class="text-[11px] text-slate-300 space-y-1 bg-slate-900/50 p-3 rounded-lg border border-slate-800">
+<li>• <b>Сплит проп-фирмы:</b> 90/10 в нашу пользу[cite: 1]</li>
+<li>• <b>Выплаты:</b> Ежедневные (Daily)[cite: 1]</li>
+<li>• <b>Активация:</b> $0 (No Activation Fee)[cite: 1]</li>
+</ul>
+</div>
+<!-- STEP 3 -->
+<div class="glass-card rounded-2xl p-5 border-t-4 border-t-purple-500 space-y-3 relative">
+<span class="absolute top-3 right-4 text-2xl font-black text-slate-700/40">03</span>
+<div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400">
+<i class="fa-solid fa-arrows-spin"></i>
+</div>
+<h3 class="font-bold text-white text-sm">3. Разгон и Реинвест</h3>
+<p class="text-xs text-slate-400 leading-relaxed">
+В первые 2 месяца 100% прибыли идет на покупку аккаунтов, а с М3 — 50% реинвест.
+</p>
+<ul class="text-[11px] text-slate-300 space-y-1 bg-slate-900/50 p-3 rounded-lg border border-slate-800">
+<li>• <b>Диверсификация:</b> Сетка аккаунтов</li>
+<li>• <b>Зарплата трейдера:</b> $1,000/мес</li>
+<li>• <b>Органический рост:</b> За счет выплат</li>
+</ul>
+</div>
+<!-- STEP 4 -->
+<div class="glass-card rounded-2xl p-5 border-t-4 border-t-amber-500 space-y-3 relative">
+<span class="absolute top-3 right-4 text-2xl font-black text-slate-700/40">04</span>
+<div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400">
+<i class="fa-solid fa-coins"></i>
+</div>
+<h3 class="font-bold text-white text-sm">4. Выплаты Инвестору</h3>
+<p class="text-xs text-slate-400 leading-relaxed">
+С 3-го месяца чистая прибыль делится 50/50 между инвестором и трейдером.
+</p>
+<ul class="text-[11px] text-slate-300 space-y-1 bg-slate-900/50 p-3 rounded-lg border border-slate-800">
+<li>• <b>Сплит дивидендов:</b> 50% / 50% (с М3)</li>
+<li>• <b>Зарплата:</b> $1,000 гарантировано</li>
+<li>• <b>Потенциал:</b> Выход на стабильный профит</li>
+</ul>
+</div>
+</div>
+<!-- PROFFIRM SPECIFICATION BOX -->
+<div class="glass-card rounded-2xl p-6 bg-slate-900/90 border border-slate-700">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-4 mb-4">
+<div>
+<h3 class="text-base font-bold text-white flex items-center gap-2">
+<i class="fa-solid fa-bolt text-amber-400"></i> Спецификация тарифа RAPID EOD ($50,000)
+</h3>
+<p class="text-xs text-slate-400">Базовый инструмент для реализации торговой стратегии</p>
+</div>
+<span class="text-lg font-bold text-emerald-400 bg-emerald-500/10 px-4 py-1.5 rounded-lg border border-emerald-500/30">
+$135 <span class="text-xs text-slate-400 line-through font-normal">$225</span>
+</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+<div class="p-3 bg-slate-800/50 rounded-xl">
+<span class="text-slate-400 block mb-1">Target Profit</span>
+<span class="font-bold text-white text-sm">$3,000</span>
+</div>
+<div class="p-3 bg-slate-800/50 rounded-xl">
+<span class="text-slate-400 block mb-1">Max Drawdown</span>
+<span class="font-bold text-rose-400 text-sm">$2,000 (EOD)</span>
+</div>
+<div class="p-3 bg-slate-800/50 rounded-xl">
+<span class="text-slate-400 block mb-1">Profit Split</span>
+<span class="font-bold text-emerald-400 text-sm">90% / 10%</span>
+</div>
+<div class="p-3 bg-slate-800/50 rounded-xl">
+<span class="text-slate-400 block mb-1">Min Days to Pass</span>
+<span class="font-bold text-white text-sm">4 Дня</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 3: INITIAL INVESTMENT & COMPOUNDING TIMELINE -->
+<div class="mt-12 space-y-6">
+<div class="text-center max-w-2xl mx-auto space-y-2">
+<span class="px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-semibold border border-purple-500/30">
+INVESTMENT TIMELINE & CAPITAL COMPOUNDING
+</span>
+<h2 class="text-2xl font-bold text-white">Стратегия Разгона и Выплат Дивидендов</h2>
+<p class="text-xs text-slate-400">Пошаговое развитие бизнеса с выходом на распределение прибыли 50/50 с 3-го месяца.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- MONTH 1 CARD -->
+<div class="glass-card rounded-2xl p-6 border-l-4 border-l-brand-400 space-y-4">
+<div class="flex justify-between items-center border-b border-slate-800 pb-3">
+<span class="text-xs font-bold text-brand-400 uppercase tracking-wider">Месяц 1</span>
+<span class="px-2.5 py-1 bg-brand-500/10 text-brand-300 text-[11px] font-semibold rounded-lg border border-brand-500/20">
+Запуск ($1,000)
+</span>
+</div>
+<h3 class="font-bold text-white text-sm">Формирование Первого Funded-Аккаунта</h3>
+<div class="space-y-2 text-xs text-slate-300">
+<div class="flex justify-between p-2 bg-slate-900/60 rounded-lg">
+<span class="text-slate-400">Стартовый капитал:</span>
+<span class="font-bold text-white">$1,000</span>
+</div>
+<div class="flex justify-between p-2 bg-slate-900/60 rounded-lg">
+<span class="text-slate-400">Куплено Eval ($135/шт):</span>
+<span class="font-bold text-purple-300">3 шт (-$405)</span>
+</div>
+<div class="flex justify-between p-2 bg-slate-900/60 rounded-lg">
+<span class="text-slate-400">Расходы М1:</span>
+<span class="font-bold text-rose-300">-$595</span>
+</div>
+<div class="flex justify-between p-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-emerald-400">
+<span>Стало Funded (1 из 3):</span>
+<span class="font-bold">1 Funded ($50K)</span>
+</div>
+</div>
+<p class="text-[11px] text-slate-400 leading-relaxed">
+Покупаем 3 челленджа. С учетом 33.3% Win Rate 1 аккаунт успешно проходит и становится <b>Funded ($50,000)</b> для первой выплаты в $2,000.
+</p>
+</div>
+<!-- MONTH 2 CARD -->
+<div class="glass-card rounded-2xl p-6 border-l-4 border-l-purple-400 space-y-4">
+<div class="flex justify-between items-center border-b border-slate-800 pb-3">
+<span class="text-xs font-bold text-purple-400 uppercase tracking-wider">Месяц 2</span>
+<span class="px-2.5 py-1 bg-purple-500/10 text-purple-300 text-[11px] font-semibold rounded-lg border border-purple-500/20">
+100% Реинвест
+</span>
+</div>
+<h3 class="font-bold text-white text-sm">Масштабирование Сетки Аккаунтов</h3>
+<div class="space-y-2 text-xs text-slate-300">
+<div class="flex justify-between p-2 bg-slate-900/60 rounded-lg">
+<span class="text-slate-400">Выплата с 1-го Funded:</span>
+<span class="font-bold text-sky-300">+$2,000</span>
+</div>
+<div class="flex justify-between p-2 bg-slate-900/60 rounded-lg">
+<span class="text-slate-400">Зарплата трейдера:</span>
+<span class="font-bold text-rose-300">-$1,000</span>
+</div>
+<div class="flex justify-between p-2 bg-purple-500/10 border border-purple-500/20 rounded-lg text-purple-300">
+<span>Куплено Eval ($1,000):</span>
+<span class="font-bold">7 шт</span>
+</div>
+<div class="flex justify-between p-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-emerald-400">
+<span>Стало Funded (+2 шт):</span>
+<span class="font-bold">Всего 3 Funded</span>
+</div>
+</div>
+<p class="text-[11px] text-slate-400 leading-relaxed">
+Первые $1,000 идут на зарплату трейдера, а 100% оставшейся прибыли ($1,000) направляется на покупку 7 челленджей. Пул растет до <b>3-х Funded-аккаунтов</b>.
+</p>
+</div>
+<!-- MONTH 3 CARD -->
+<div class="glass-card rounded-2xl p-6 border-l-4 border-l-emerald-400 space-y-4">
+<div class="flex justify-between items-center border-b border-slate-800 pb-3">
+<span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Месяц 3</span>
+<span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 text-[11px] font-semibold rounded-lg border border-emerald-500/20">
+Старт Выплат 50/50
+</span>
+</div>
+<h3 class="font-bold text-white text-sm">Первый Вывод Дивидендов 50/50</h3>
+<div class="space-y-2 text-xs text-slate-300">
+<div class="flex justify-between p-2 bg-slate-900/60 rounded-lg">
+<span class="text-slate-400">Вывод с 3-х Funded:</span>
+<span class="font-bold text-sky-300">+$6,000</span>
+</div>
+<div class="flex justify-between p-2 bg-slate-900/60 rounded-lg">
+<span class="text-slate-400">Зарплата трейдера:</span>
+<span class="font-bold text-rose-300">-$1,000</span>
+</div>
+<div class="flex justify-between p-2 bg-purple-500/10 border border-purple-500/20 rounded-lg text-purple-300">
+<span>50% Реинвест в Eval:</span>
+<span class="font-bold">$2,500 (~18 Eval)</span>
+</div>
+<div class="flex justify-between p-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-emerald-400">
+<span>Дивиденды (50/50):</span>
+<span class="font-bold">По $1,250 инвестору/трейдеру</span>
+</div>
+</div>
+<p class="text-[11px] text-slate-400 leading-relaxed">
+Заработок $6,000 минус $1,000 зарплата = $5,000. Из них $2,500 идёт на покупку 18 новых челленджей, а оставшиеся $2,500 делятся **ровно 50/50** между Инвестором ($1,250) и Трейдером ($1,250).
+</p>
+</div>
+</div>
+<!-- SUMMARY BANNER FOR INVESTOR -->
+<div class="glass-card rounded-2xl p-6 bg-gradient-to-r from-brand-900/30 via-slate-900 to-emerald-900/20 border border-brand-500/30">
+<div class="flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="space-y-1">
+<h4 class="text-sm font-bold text-white flex items-center gap-2">
+<i class="fa-solid fa-rocket text-brand-400"></i> Результат старта с 3-го месяца
+</h4>
+<p class="text-xs text-slate-300">
+Инвестор окупает стартовый капитал уже на 3-й месяц, получая $1,250 чистых дивидендов (125% ROI), параллельно удерживая сильный темп реинвестирования для разгона до 15+ аккаунтов на Месяц 4.
+</p>
+</div>
+<div class="shrink-0">
+<span class="px-4 py-2 bg-emerald-500/20 text-emerald-400 font-bold text-xs rounded-xl border border-emerald-500/40">
+Сплит 50/50 открыт с Месяца 3
+</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+let currentHorizon = 4;
+let chartInstance = null;
+const inputs = {
+initialCapital: document.getElementById('initialCapital'),
+evalPrice: document.getElementById('evalPrice'),
+winRate: document.getElementById('winRate'),
+targetPayout: document.getElementById('targetPayout'),
+monthlyOpex: document.getElementById('monthlyOpex'),
+reinvestRate: document.getElementById('reinvestRate'),
+investorStartMonth: document.getElementById('investorStartMonth'),
+investorShare: document.getElementById('investorShare')
+};
+const displays = {
+winRateVal: document.getElementById('winRateVal'),
+reinvestRateVal: document.getElementById('reinvestRateVal'),
+investorShareVal: document.getElementById('investorShareVal'),
+headerBadge: document.getElementById('headerInvestorBadge'),
+kpiInitial: document.getElementById('kpiInitial'),
+kpiActiveFunded: document.getElementById('kpiActiveFunded'),
+kpiInvestorProfit: document.getElementById('kpiInvestorProfit'),
+kpiInvestorROI: document.getElementById('kpiInvestorROI'),
+kpiTraderProfit: document.getElementById('kpiTraderProfit'),
+kpiTraderNote: document.getElementById('kpiTraderNote'),
+tableBody: document.getElementById('financialTableBody'),
+tableFoot: document.getElementById('financialTableFoot')
+};
+Object.values(inputs).forEach(input => {
+input.addEventListener('input', calculateAndRender);
+});
+document.querySelectorAll('.horizon-btn').forEach(btn => {
+btn.addEventListener('click', (e) => {
+document.querySelectorAll('.horizon-btn').forEach(b => {
+b.classList.remove('border-brand-500', 'bg-brand-500/20', 'text-brand-300');
+b.classList.add('border-slate-700', 'bg-slate-800', 'text-slate-300');
+});
+e.target.classList.remove('border-slate-700', 'bg-slate-800', 'text-slate-300');
+e.target.classList.add('border-brand-500', 'bg-brand-500/20', 'text-brand-300');
+currentHorizon = parseInt(e.target.dataset.months);
+calculateAndRender();
+});
+});
+function calculateAndRender() {
+const initialCap = parseFloat(inputs.initialCapital.value) || 1000;
+const price = parseFloat(inputs.evalPrice.value) || 135;
+const winRatePct = parseFloat(inputs.winRate.value) || 33.3;
+const winRateDecimal = winRatePct / 100;
+const payoutPerFunded = parseFloat(inputs.targetPayout.value) || 2000;
+const opexVal = parseFloat(inputs.monthlyOpex.value) || 1000;
+const reinvestPct = parseFloat(inputs.reinvestRate.value) || 50;
+const startMonth = parseInt(inputs.investorStartMonth.value) || 3;
+const invSharePct = parseFloat(inputs.investorShare.value) || 50;
+displays.winRateVal.innerText = `${winRatePct.toFixed(1)}% (1 из ${(100/winRatePct).toFixed(1)})`;
+displays.reinvestRateVal.innerText = `${reinvestPct}%`;
+displays.investorShareVal.innerText = `${invSharePct}%`;
+displays.headerBadge.innerHTML = `<i class="fa-solid fa-handshake mr-1"></i> Investor Split: ${invSharePct}% (с М${startMonth})`;
+displays.kpiTraderNote.innerText = `Бонус ${100-invSharePct}% с М${startMonth}+`;
+let tableHTML = '';
+let cumulativeActiveFunded = 0;
+let totalInvestorReturn = 0;
+let totalTraderBonus = 0;
+let totGross = 0;
+let totOpex = 0;
+let totEvalSpend = 0;
+let totEvalsBought = 0;
+let totPassed = 0;
+let totNetRest = 0;
+const labels = [];
+const grossData = [];
+const investorData = [];
+const traderData = [];
+let reinvestBudgetForMonth = 405; // M1: 3 * $135 = $405
+for (let m = 1; m <= currentHorizon; m++) {
+labels.push(`Месяц ${m}`);
+let opex = (m === 1) ? 595 : opexVal;
+let evalSpend = reinvestBudgetForMonth;
+let evalsBought = Math.floor(evalSpend / price);
+// Passed accounts this month
+const passedThisMonth = Math.max(1, Math.round(evalsBought * winRateDecimal));
+cumulativeActiveFunded += passedThisMonth;
+// Gross earnings
+const grossEarnings = cumulativeActiveFunded * payoutPerFunded;
+// Available profit after salary
+const availAfterSalary = Math.max(0, grossEarnings - opex);
+let nextReinvestAmount = 0;
+let netDistributableProfit = 0;
+let investorShare = 0;
+let traderBonus = 0;
+if (m < startMonth) {
+// Grace period: 100% of profit after salary goes to buying new evals
+nextReinvestAmount = availAfterSalary;
+netDistributableProfit = 0;
+investorShare = 0;
+traderBonus = 0;
+} else {
+// Payout phase: split reinvestment and dividends
+nextReinvestAmount = availAfterSalary * (reinvestPct / 100);
+netDistributableProfit = Math.max(0, availAfterSalary - nextReinvestAmount);
+investorShare = netDistributableProfit * (invSharePct / 100);
+traderBonus = netDistributableProfit * ((100 - invSharePct) / 100);
+}
+reinvestBudgetForMonth = nextReinvestAmount;
+totalInvestorReturn += investorShare;
+totalTraderBonus += traderBonus;
+totGross += grossEarnings;
+totOpex += opex;
+totEvalSpend += evalSpend;
+totEvalsBought += evalsBought;
+totPassed += passedThisMonth;
+totNetRest += netDistributableProfit;
+grossData.push(grossEarnings);
+investorData.push(investorShare);
+traderData.push(traderBonus);
+tableHTML += `
+<tr class="hover:bg-slate-800/40 transition-colors">
+<td class="p-3 font-semibold text-white">M${m}</td>
+<td class="p-3 font-bold text-sky-300">$${grossEarnings.toLocaleString()}</td>
+<td class="p-3 text-rose-300">$${opex.toLocaleString()}</td>
+<td class="p-3 text-purple-300 font-medium">$${Math.round(evalSpend).toLocaleString()}</td>
+<td class="p-3 text-purple-300">${evalsBought} шт</td>
+<td class="p-3 text-emerald-400 font-bold">+${passedThisMonth} шт</td>
+<td class="p-3 font-bold text-brand-400 text-sm">${cumulativeActiveFunded} шт</td>
+<td class="p-3 font-semibold text-white">$${Math.round(netDistributableProfit).toLocaleString()}</td>
+<td class="p-3 font-bold text-emerald-400">$${Math.round(investorShare).toLocaleString()}</td>
+<td class="p-3 font-bold text-sky-400">$${Math.round(traderBonus).toLocaleString()}</td>
+</tr>
+`;
+}
+displays.tableBody.innerHTML = tableHTML;
+// TABLE FOOTER TOTALS
+displays.tableFoot.innerHTML = `
+<tr>
+<td class="p-3">ИТОГО</td>
+<td class="p-3 text-sky-300">$${Math.round(totGross).toLocaleString()}</td>
+<td class="p-3 text-rose-300">$${Math.round(totOpex).toLocaleString()}</td>
+<td class="p-3 text-purple-300">$${Math.round(totEvalSpend).toLocaleString()}</td>
+<td class="p-3 text-purple-300">${totEvalsBought} шт</td>
+<td class="p-3 text-emerald-400">+${totPassed} шт</td>
+<td class="p-3 text-brand-400">${cumulativeActiveFunded} шт</td>
+<td class="p-3 text-white">$${Math.round(totNetRest).toLocaleString()}</td>
+<td class="p-3 text-emerald-400">$${Math.round(totalInvestorReturn).toLocaleString()}</td>
+<td class="p-3 text-sky-400">$${Math.round(totalTraderBonus).toLocaleString()}</td>
+</tr>
+`;
+displays.kpiInitial.innerText = `$${initialCap.toLocaleString()}`;
+displays.kpiActiveFunded.innerText = cumulativeActiveFunded;
+displays.kpiInvestorProfit.innerText = `$${Math.round(totalInvestorReturn).toLocaleString()}`;
+
+const roi = (totalInvestorReturn / initialCap) * 100;
+displays.kpiInvestorROI.innerText = `ROI: ${roi.0}%` || `ROI: ${roi.toFixed(0)}%`;
+displays.kpiTraderProfit.innerText = `$${Math.round(totalTraderBonus).toLocaleString()}`;
+renderChart(labels, grossData, investorData, traderData);
+}
+function renderChart(labels, grossData, investorData, traderData) {
+const ctx = document.getElementById('growthChart').getContext('2d');
+if (chartInstance) chartInstance.destroy();
+chartInstance = new Chart(ctx, {
+type: 'bar',
+data: {
+labels: labels,
+datasets: [
+{
+label: 'Валовый Заработок ($)',
+data: grossData,
+backgroundColor: 'rgba(56, 189, 248, 0.2)',
+borderColor: '#38bdf8',
+borderWidth: 1,
+type: 'line',
+tension: 0.3
+},
+{
+label: 'Выплата Инвестору ($)',
+data: investorData,
+backgroundColor: '#10b981',
+borderRadius: 6
+},
+{
+label: 'Бонус Трейдера ($)',
+data: traderData,
+backgroundColor: '#0284c7',
+borderRadius: 6
+}
+]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: {
+labels: { color: '#94a3b8', font: { size: 11 } }
+}
+},
+scales: {
+x: {
+grid: { color: 'rgba(255,255,255,0.05)' },
+ticks: { color: '#94a3b8' }
+},
+y: {
+grid: { color: 'rgba(255,255,255,0.05)' },
+ticks: { color: '#94a3b8' }
+}
+}
+}
+});
+}
+calculateAndRender();
+</script>
+</body>
+</html>
